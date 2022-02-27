@@ -1,3 +1,2 @@
 # Ping-Pong
-qbasic ping pong game
-# still writing
+python ping pong game with gravity, ball compression, boost and more
