@@ -1,5 +1,4 @@
 from turtle import *
-import random
 
 # initlize the screen
 screen = Screen()
@@ -17,31 +16,27 @@ ball.penup()
 # paddle
 paddle = Turtle(shape="square", visible=True)
 paddle.goto(0, -400)
-paddle.speed("normal")
+paddle.speed(0)
 paddle.resizemode("user")
 paddle.shapesize(stretch_len=10, stretch_wid=1)
 paddle.color("red")
+
+# pen
+pen = Turtle(shape="circle", visible=False)
+pen.goto(-500, 380)
+pen.color("white")
+
 ballspeedx = 10
-ballyspeed = -9.8
-paddlespeed = 2
+ballyspeed = 10
+paddlespeed = 100
 points = 0
-paddleforce = 10
 
-while True:
-    
-    # change balls position
-    ball.setx(ball.xcor() + ballspeedx)
-    ball.sety(ball.ycor() + ballyspeed)
+def moveleft():
+    paddle.setx(paddle.xcor() - paddlespeed)
 
-    # check if ball is at the edge of the screen
-    if ball.xcor() >= 500 or ball.xcor() <= -500:
-        ballspeedx = ballspeedx * (-1)
+def moveright():
+    paddle.setx(paddle.xcor() + paddlespeed)
 
-    if ball.ycor() < -400:
-        ball.sety(400)
-        ball.setx(random.randint(-500, 500))
-        paddleforce = 10
-
-    if ball.ycor() > 400:
-        ball.sety(400)
-        ball.setx(random.randint(-500, 500))
+onkey(moveleft, "a")
+onkey(moveright, "d")
+listen()
