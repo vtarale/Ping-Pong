@@ -57,7 +57,7 @@ while True:
     ball.sety(ball.ycor() + ballspeedy)
 
     # check if coliding with paddle
-    if (ball.xcor() < paddle.xcor() + 200.00 and ball.xcor() > paddle.xcor() - 180.00) and (ball.ycor() > -420 and ball.ycor() < -380):
+    if (ball.xcor() < paddle.xcor() + 190.00 and ball.xcor() > paddle.xcor() - 170.00) and (ball.ycor() > -420 and ball.ycor() < -380):
         ball.setx(ball.xcor() + px)
         ball.sety(ball.ycor() + py)
         # increase paddle force for next hit
