@@ -1,4 +1,5 @@
 from turtle import *
+from random import randint
 
 # initlize the screen
 screen = Screen()
@@ -8,13 +9,14 @@ screen.setworldcoordinates(-500, -400, 500, 400)
 
 # set ball and its position
 ball = Turtle(shape="circle", visible=True)
+ball.penup()
 ball.goto(0, 0)
 ball.speed(0)
 ball.color("green")
-ball.penup()
 
 # paddle
 paddle = Turtle(shape="square", visible=True)
+paddle.penup()
 paddle.goto(0, -400)
 paddle.speed(0)
 paddle.resizemode("user")
@@ -26,12 +28,14 @@ pen = Turtle(shape="circle", visible=False)
 pen.goto(-500, 380)
 pen.color("white")
 
-ballspeedx = 20
 ballspeedy = 20
+ballspeedx = -30
 paddlespeed = 100
 points = 0
-gravity = -3
-ballcompression = 1
+gravity = -7
+ballcompression = 4
+px = 20
+py = 20
 
 def moveleft():
     paddle.setx(paddle.xcor() - paddlespeed)
@@ -44,16 +48,57 @@ onkey(moveright, "d")
 listen()
 
 while True:
+    # move ball
     ball.setx(ball.xcor() + ballspeedx)
     ball.sety(ball.ycor() + ballspeedy)
 
-    if ball.xcor() > 500 or ball.xcor() < -500:
-        ballspeedx = ballspeedx * (-1) - ballcompression
+    # check if coliding with paddle
+    if (ball.xcor() < paddle.xcor() + 180.00 and ball.xcor() > paddle.xcor() - 180.00) and (ball.ycor() > -400 and ball.ycor() < -390):
+        ball.setx(ball.xcor() + px)
+        ball.sety(ball.ycor() + py)
+        # increase paddle force for next hit
+        py = py + 10
+        if px < 0:
+            px = px - 20
+        else:
+            px = px + 20
+        px = px * (-1)
+        ballspeedx = px
+        ballspeedy = py
+
+    # check if ball at edge
+    if ball.xcor() > 500:
+        ball.setx(500)
+        ballspeedx = ballspeedx * (-1)
+        if ballspeedx < 0:
+            ballspeedx = ballspeedx + ballcompression
+        else:
+            ballspeedx = ballspeedx - ballcompression
+    
+    if ball.xcor() < -500:
+        ball.setx(-500)
+        ballspeedx = ballspeedx * (-1)
+        if ballspeedx < 0:
+            ballspeedx = ballspeedx + ballcompression
+        else:
+            ballspeedx = ballspeedx - ballcompression
     
     if ball.ycor() < -400:
-        ballspeedy = (ballspeedy * (-1)) - ballcompression
+        ball.sety(-400)
+        ballspeedy = ballspeedy * (-1)
+        if ballspeedy < 0:
+            ballspeedy = ballspeedy + ballcompression
+        else:
+            ballspeedy = ballspeedy - ballcompression
+        px = 20
+        py = 20
     
     if ball.ycor() > 400:
-        ballspeedy = ballspeedy * (-1) - ballcompression
+        ball.sety(400)
+        ballspeedy = ballspeedy * (-1)
+        if ballspeedy < 0:
+            ballspeedy = ballspeedy + ballcompression
+        else:
+            ballspeedy = ballspeedy - ballcompression
     
     ball.sety(ball.ycor() + gravity)
