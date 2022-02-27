@@ -3,7 +3,7 @@ from random import randint
 
 # initlize the screen
 screen = Screen()
-screen.bgcolor("black")
+screen.bgcolor("yellow")
 screen.title("Ping Pong")
 screen.setworldcoordinates(-500, -400, 500, 400)
 
@@ -25,17 +25,22 @@ paddle.color("red")
 
 # pen
 pen = Turtle(shape="circle", visible=False)
+pen.penup()
 pen.goto(-500, 380)
-pen.color("white")
+pen.color("black")
+pen.pendown()
 
 ballspeedy = 20
 ballspeedx = -30
 paddlespeed = 100
 points = 0
-gravity = -7
-ballcompression = 4
+gravity = -8
+ballcompression = 5
 px = 20
 py = 20
+
+# display points
+pen.write(f"Points {points}", font=("Consolas", 20, "bold"))
 
 def moveleft():
     paddle.setx(paddle.xcor() - paddlespeed)
@@ -53,7 +58,7 @@ while True:
     ball.sety(ball.ycor() + ballspeedy)
 
     # check if coliding with paddle
-    if (ball.xcor() < paddle.xcor() + 180.00 and ball.xcor() > paddle.xcor() - 180.00) and (ball.ycor() > -400 and ball.ycor() < -390):
+    if (ball.xcor() < paddle.xcor() + 200.00 and ball.xcor() > paddle.xcor() - 180.00) and (ball.ycor() > -420 and ball.ycor() < -380):
         ball.setx(ball.xcor() + px)
         ball.sety(ball.ycor() + py)
         # increase paddle force for next hit
@@ -65,6 +70,11 @@ while True:
         px = px * (-1)
         ballspeedx = px
         ballspeedy = py
+        # update points
+        points += 1
+        # display results
+        pen.clear()
+        pen.write(f"Points {points}", font=("Consolas", 20, "bold"))
 
     # check if ball at edge
     if ball.xcor() > 500:
@@ -86,12 +96,18 @@ while True:
     if ball.ycor() < -400:
         ball.sety(-400)
         ballspeedy = ballspeedy * (-1)
+        # decrease paddle force for next hit
         if ballspeedy < 0:
             ballspeedy = ballspeedy + ballcompression
         else:
             ballspeedy = ballspeedy - ballcompression
         px = 20
         py = 20
+        # update points
+        points = points - 1
+        # display results
+        pen.clear()
+        pen.write(f"Points {points}", font=("Consolas", 20, "bold"))
     
     if ball.ycor() > 400:
         ball.sety(400)
