@@ -1,5 +1,4 @@
 from turtle import *
-from random import randint
 
 # initlize the screen
 screen = Screen()
