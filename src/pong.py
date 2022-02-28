@@ -1,4 +1,5 @@
 from turtle import *
+from random import randint
 
 # initlize the screen
 screen = Screen()
@@ -9,7 +10,7 @@ screen.setworldcoordinates(-500, -400, 500, 400)
 # set ball and its position
 ball = Turtle(shape="circle", visible=True)
 ball.penup()
-ball.goto(0, 0)
+ball.goto(randint(-500, 500), 400)
 ball.speed(0)
 ball.color("green")
 
