@@ -30,8 +30,8 @@ pen.goto(-500, 380)
 pen.color("black")
 pen.pendown()
 
-ballspeedy = 20
-ballspeedx = -30
+ballspeedy = 10
+ballspeedx = -20
 paddlespeed = 100
 points = 0
 gravity = -8
@@ -64,9 +64,9 @@ while True:
         # increase paddle force for next hit
         py = py + 10
         if px < 0:
-            px = px - 20
+            px = px - 10
         else:
-            px = px + 20
+            px = px + 10
         px = px * (-1)
         ballspeedx = px
         ballspeedy = py
@@ -102,7 +102,7 @@ while True:
         else:
             ballspeedy = ballspeedy - ballcompression
         px = 20
-        py = 20
+        py = 10
         # update points
         points = points - 1
         # display results
